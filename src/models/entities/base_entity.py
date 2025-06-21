@@ -1,7 +1,6 @@
-from uuid import UUID, uuid4
+from sqlalchemy import UUID
 from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
-    id: UUID = uuid4()
-    name: str
+    id: UUID
