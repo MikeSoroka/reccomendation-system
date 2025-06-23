@@ -1,12 +1,11 @@
-from base_entity import Base
+from src.models.entities.base_entity import Base
 
-from sqlmodel import DateTime, ForeignKey, Integer, Text, String, UUID
+from sqlmodel import DateTime, ForeignKey, Integer, Text, String
 from sqlmodel import Field
-import uuid
+from uuid import UUID, uuid4
 
-class MovieModel(Base):
+class UserModel(Base, table=True):
     __tablename__ = "usersTable"
 
-    id: UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     dataset_id: int | None # tmp solution to export data from the free dataset
     #TODO: username, password and other stuff to be added later
