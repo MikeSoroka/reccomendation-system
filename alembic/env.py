@@ -17,10 +17,10 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 from sqlmodel import SQLModel
-from src.models.entities.user_model import UserModel
-from src.models.entities.movie_model import MovieModel
-from src.models.entities.genre_model import GenreModel
-from src.models.entities.interaction_model import InteractionModel
+from src.api.models.entities.user_model import UserModel
+from src.api.models.entities.movie_model import MovieModel
+from src.api.models.entities.genre_model import GenreModel
+from src.api.models.entities.interaction_model import InteractionModel
 
 target_metadata = SQLModel.metadata
 # other values from the config, defined by the needs of env.py,

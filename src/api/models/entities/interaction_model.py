@@ -1,4 +1,4 @@
-from src.models.entities.base_entity import Base
+from src.api.models.entities.base_entity import Base
 
 from datetime import datetime, timezone
 from sqlmodel import Field, SQLModel
