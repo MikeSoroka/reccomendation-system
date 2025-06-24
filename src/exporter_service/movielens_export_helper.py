@@ -1,7 +1,8 @@
 from config import PROJECT_ROOT
 import os
 import pandas as pd
-from src.api.models
+from src.api.models.entities import user_model, movie_model, interaction_model
+from src.api.requests.base_add_request import BaseAddRequest
 
 class Helper:
     def __init__(self, location = os.path.join(PROJECT_ROOT, 'datasets', 'movielens_dataset')):

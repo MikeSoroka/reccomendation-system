@@ -3,18 +3,17 @@ from dotenv import load_dotenv
 import os
 
 class BaseAddRequest():
-    def __init__(self, request_models: list):
-        load_dotenv()
-        DATABASE_URL = os.getenv("DATABASE_URL")
-        self.engine = create_engine(DATABASE_URL, echo=True)
-        self.models = request_models
+    load_dotenv()
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    engine = create_engine(DATABASE_URL, echo=True)
 
-    def submit(self):
-        with Session(self.engine) as session:
+    @classmethod
+    def submit(cls, models):
+        with Session(cls.engine) as session:
             try:
-                for request in self.models:
-                    session.add(self.model)
-                    session.commit()
+                for model in models:
+                    session.add(model)
+                session.commit()
             except Exception as e:
                 session.rollback()
                 raise
