@@ -19,7 +19,6 @@ if config.config_file_name is not None:
 from sqlmodel import SQLModel
 from src.api.models.entities.user_model import UserModel
 from src.api.models.entities.movie_model import MovieModel
-from src.api.models.entities.genre_model import GenreModel
 from src.api.models.entities.interaction_model import InteractionModel
 
 target_metadata = SQLModel.metadata
