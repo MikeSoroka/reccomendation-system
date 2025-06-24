@@ -13,5 +13,3 @@ class InteractionModel(SQLModel, table=True):
     movie_id: UUID = Field(foreign_key="moviesTable.id", primary_key=True)
     rating: int = Field(ge=1, le=10)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-
-    dataset_id: int | None = Field(default=None)  # tmp solution to export data from the free dataset
