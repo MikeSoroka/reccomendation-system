@@ -16,11 +16,12 @@ class AddInteractionsRequest(BaseAddRequest):
                     session.add(
                         InteractionModel(
                             user_id=model.user_id,
-                            interaction_id=model.interaction_id,
-                            rating=model.rating,
+                            movie_id=model.movie_id,
+                             rating=model.rating,
+                            **({} if model.created_at is None else {"created_at": model.created_at}),
                         )
                     )
-                session.commit()
+                    session.commit()
             except Exception as e:
                 session.rollback()
                 raise
