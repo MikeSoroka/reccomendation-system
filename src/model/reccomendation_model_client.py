@@ -4,8 +4,8 @@ class MovieReccomender:
     def __init__(self, weights):
         self.weights = weights
 
-    def user_reccomendation(self, user):
-        return [1, 2, 3]
+    def user_reccomendation(self, user, limit):
+        return range(limit)
 
-    def movie_reccomendation(self, movie):
-        return [1, 2, 3]
+    def movie_reccomendation(self, movie, limit):
+        return range(limit)
