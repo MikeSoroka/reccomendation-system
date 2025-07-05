@@ -7,5 +7,4 @@ from uuid import UUID, uuid4
 class UserModel(Base, table=True):
     __tablename__ = "usersTable"
 
-    dataset_id: int | None # tmp solution to export data from the free dataset
     #TODO: username, password and other stuff to be added later

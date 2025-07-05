@@ -7,7 +7,7 @@ from sqlmodel import create_engine, Session
 from dotenv import load_dotenv
 import os
 
-class AddInteractionsRequest(BaseAddRequest):
+class AddMoviesRequest(BaseAddRequest):
     @classmethod
     def submit(cls, models: list[AddMovieModel]):
         with Session(cls.engine) as session:
