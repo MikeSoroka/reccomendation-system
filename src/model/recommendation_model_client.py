@@ -5,7 +5,7 @@ class MovieReccomender:
         self.weights = weights
 
     def user_reccomendation(self, user, limit):
-        return range(limit)
+        return list(range(limit))
 
     def movie_reccomendation(self, movie, limit):
-        return range(limit)
+        return list(range(limit))
