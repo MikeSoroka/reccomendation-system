@@ -1,4 +1,3 @@
-# main.py
 from fastapi import APIRouter
 from src.api.requests.recommendations.read_recommendation_request import ReadRecommendationRequest
 from src.api.models.schemas.recommendations.read_recommendation_model import ReadRecommendationModel
