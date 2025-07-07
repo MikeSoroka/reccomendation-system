@@ -7,4 +7,4 @@ from uuid import UUID, uuid4
 class MovieModel(Base, table=True):
     __tablename__ = "moviesTable"
 
-    title: str = Field(max_length=100, index=True)
+    title: str = Field(max_length=200, index=True)

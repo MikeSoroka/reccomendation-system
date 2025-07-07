@@ -1,15 +1,13 @@
 from config import PROJECT_ROOT
 import os
 import pandas as pd
-from src.api.models.entities import user_model, movie_model, interaction_model
-from src.api.models.entities.user_model import UserModel
 from src.api.models.schemas.interactions.add_interaction_model import AddInteractionModel
 from src.api.models.schemas.users.add_user_model import AddUserModel
-from src.api.requests.base_add_request import BaseAddRequest
+from src.api.models.schemas.movies.add_movie_model import AddMovieModel
 from src.api.requests.interactions.add_interactions_request import AddInteractionsRequest
 from src.api.requests.movies.add_movies_request import AddMoviesRequest
 from src.api.requests.users.add_users_request import AddUsersRequest
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 class MovielensHelper:
     @classmethod
@@ -23,12 +21,12 @@ class MovielensHelper:
 
         print("Generating requests")
         user_id_to_uuid = dict(zip(users, [uuid4() for user in users], ))
-        users_request = [UserModel(id = user_id_to_uuid[user_id]) for user_id in users]
+        users_request = [AddUserModel(id = user_id_to_uuid[user_id]) for user_id in users]
 
         movie_id_to_title = dict(zip(movies, movies_df['title'], ))
         movie_id_to_uuid = dict(zip(movies, [uuid4() for movie in movies], ))
         movies_request = [
-            AddUserModel(id=movie_id_to_uuid[movie_id],
+            AddMovieModel(id=movie_id_to_uuid[movie_id],
                         title=movie_id_to_title[movie_id])
             for movie_id in movies
         ]
@@ -46,8 +44,8 @@ class MovielensHelper:
 
         print("Writing to the database")
         try:
-            AddUsersRequest(users_request)
-            AddMoviesRequest(movies_request)
-            AddInteractionsRequest(interactions_request)
+            AddUsersRequest.submit(users_request)
+            AddMoviesRequest.submit(movies_request)
+            AddInteractionsRequest.submit(interactions_request)
         except Exception as e:
             raise e
