@@ -21,7 +21,7 @@ class AddInteractionsRequest(BaseAddRequest):
                             **({} if model.created_at is None else {"created_at": model.created_at}),
                         )
                     )
-                    session.commit()
+                session.commit()
             except Exception as e:
                 session.rollback()
                 raise
