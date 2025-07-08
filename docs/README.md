@@ -1,4 +1,4 @@
-Microservice-Based Movie Recommendation System
+# Microservice-Based Movie Recommendation System
 ## Introduction
 
 This project is being developed for educational purposes to gain experience(and prove an existing one) in designing systems with near-enterprise-level logic and to acquire essential skills with key technologies, including:
