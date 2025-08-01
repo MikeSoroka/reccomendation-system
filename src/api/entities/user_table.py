@@ -1,7 +1,7 @@
-from sqlmodel import Field
+from sqlmodel import Field, SQLModel
 from uuid import UUID, uuid4
 
-class UserTable(table=True):
+class UserTable(SQLModel, table=True):
     __tablename__ = "usersTable"
     id: UUID = Field(default_factory=uuid4, primary_key=True)
 
