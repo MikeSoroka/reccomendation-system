@@ -15,8 +15,8 @@ class Container(containers.DeclarativeContainer):
             [
                 "src.api.controllers.interactions_controller",
                 "src.api.controllers.movies_controller",
+                "src.api.controllers.users_controller",
                 "src.api.controllers.recommendations_controller",
-                "src.api.controllers.interactions_controller",
             ])
 
     session = providers.Resource(get_db_session)

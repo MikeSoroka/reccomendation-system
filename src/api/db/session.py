@@ -10,15 +10,15 @@ load_dotenv()
 database_url = os.getenv("DATABASE_URL")
 engine = create_async_engine(database_url, echo=True)
 
-AsyncSession = sessionmaker(
-    engine=engine,
+async_session_factory = sessionmaker(
+    bind=engine,
     expire_on_commit=False,
     class_=AsyncSession
 )
 
 @asynccontextmanager
 async def get_db_session():
-    session = AsyncSession()
+    session = async_session_factory()
     try:
         yield session
         await session.commit()

@@ -11,5 +11,5 @@ class InteractionsService:
     async def get_interaction(self, request: ReadInteractionModel) -> InteractionTable | None:
         return await self.repository.get_interaction(request)
 
-    async def create_interaction(self, request: AddInteractionModel) ->  None:
-        return await self.repository.create_interaction(request)
+    async def add_interaction(self, request: AddInteractionModel) ->  None:
+        return await self.repository.add_interaction(request)

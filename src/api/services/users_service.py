@@ -8,8 +8,8 @@ class UsersService:
     def __init__(self, repository: UsersRepository):
         self.repository = repository
 
-    async def get_interaction(self, request: ReadUserModel) -> UserTable | None:
+    async def get_user(self, request: ReadUserModel) -> UserTable | None:
         return await self.repository.get_user(request)
 
-    async def create_interaction(self, request: AddUserModel) ->  None:
-        return await self.repository.create_user(request)
+    async def add_user(self, request: AddUserModel) ->  None:
+        return await self.repository.add_user(request)

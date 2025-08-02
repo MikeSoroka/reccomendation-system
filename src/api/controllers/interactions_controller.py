@@ -1,19 +1,32 @@
-from fastapi import APIRouter
+from dependency_injector.wiring import inject, Provide
+from fastapi import APIRouter, Depends
 
-from src.api.models.schemas.interactions.read_interaction_model import ReadInteractionModel
-from src.api.requests.interactions.add_interactions_request import AddInteractionsRequest
-from src.api.requests.interactions.read_interaction_request import ReadInteractionRequest
-from src.api.models.schemas.interactions.add_interaction_model import AddInteractionModel
+from src.api.core.container import Container
+from src.api.schemas.interactions.read_interaction_model import ReadInteractionModel
+from src.api.schemas.interactions.add_interaction_model import AddInteractionModel
 from uuid import UUID
+
+from src.api.services.interactions_service import InteractionsService
 
 router = APIRouter()
 
 @router.get("/interactions")
-async def read_item(user_id: UUID, movie_id: UUID):
+@inject
+async def read_interaction(
+    user_id: UUID,
+    movie_id: UUID,
+    interactions_service: InteractionsService = Depends(Provide[Container.interactions_service]),
+):
     model = ReadInteractionModel(user_id=user_id, movie_id=movie_id)
-    return ReadInteractionRequest.submit(model)
+    return await interactions_service.get_interaction(model)
 
 @router.post("/interactions")
-async def add_item(user_id: UUID, movie_id: UUID, rating: int):
+@inject
+async def add_interaction(
+    user_id: UUID,
+    movie_id: UUID,
+    rating: int,
+    interactions_service: InteractionsService = Depends(Provide[Container.interactions_service]),
+):
     model = AddInteractionModel(user_id=user_id, movie_id=movie_id, rating=rating)
-    return AddInteractionsRequest.submit([model])
+    await interactions_service.add_interaction(model)

@@ -11,7 +11,7 @@ class MoviesRepository:
     async def get_movie(self, request: ReadMovieModel) -> MovieTable | None:
         return await self.session.get(MovieTable, request.id)
 
-    async def create_movie  (self, request: AddMovieModel) ->  None:
+    async def add_movie  (self, request: AddMovieModel) ->  None:
         movie = MovieTable(
             id = request.id,
             title = request.title

@@ -8,8 +8,8 @@ class MoviesService:
     def __init__(self, repository: MoviesRepository):
         self.repository = repository
 
-    async def get_interaction(self, request: ReadMovieModel) -> MovieTable | None:
+    async def get_movie(self, request: ReadMovieModel) -> MovieTable | None:
         return await self.repository.get_movie(request)
 
-    async def create_interaction(self, request: AddMovieModel) ->  None:
-        return await self.repository.create_movie(request)
+    async def add_movie(self, request: AddMovieModel) ->  None:
+        return await self.repository.add_movie(request)

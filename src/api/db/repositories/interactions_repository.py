@@ -11,7 +11,7 @@ class InteractionsRepository:
     async def get_interaction(self, request: ReadInteractionModel) -> InteractionTable | None:
         return await self.session.get(InteractionTable, request.id)
 
-    async def create_interaction(self, request: AddInteractionModel) ->  None:
+    async def add_interaction(self, request: AddInteractionModel) ->  None:
         interaction = InteractionTable(
             user_id = request.user_id,
             movie_id = request.movie_id,

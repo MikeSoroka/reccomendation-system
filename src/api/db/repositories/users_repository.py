@@ -11,7 +11,7 @@ class UsersRepository:
     async def get_user(self, request: ReadUserModel) -> UserTable | None:
         return await self.session.get(UserTable, request.id)
 
-    async def create_user(self, request: AddUserModel) ->  None:
+    async def add_user(self, request: AddUserModel) ->  None:
         user = UserTable(
             id = request.id
         )
