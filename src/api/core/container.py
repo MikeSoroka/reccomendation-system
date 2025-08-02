@@ -1,14 +1,16 @@
 from dependency_injector import containers, providers
-from numpy.lib._user_array_impl import container
 
-from src.api.db.repositories.InteractionsRepository import InteractionsRepository
-from src.api.db.repositories.MoviesRepository import MoviesRepository
-from src.api.db.repositories.UsersRepository import UsersRepository
+from src.api.db.repositories.interactions_repository import InteractionsRepository
+from src.api.db.repositories.movies_repository import MoviesRepository
+from src.api.db.repositories.users_repository import UsersRepository
 from src.api.db.session import get_db_session
+from src.api.services.interactions_service import InteractionsService
+from src.api.services.movies_service import MoviesService
+from src.api.services.users_service import UsersService
 
 
 class Container(containers.DeclarativeContainer):
-    wiring_config = container.WiringConfiguration(
+    wiring_config = containers.WiringConfiguration(
         modules =
             [
                 "src.api.controllers.interactions_controller",
@@ -19,6 +21,10 @@ class Container(containers.DeclarativeContainer):
 
     session = providers.Resource(get_db_session)
 
-    interactions_repository = providers.Factory(InteractionsRepository)
-    movies_repository = providers.Factory(MoviesRepository)
-    users_repository = providers.Factory(UsersRepository)
+    interactions_repository = providers.Factory(InteractionsRepository, session=session)
+    movies_repository = providers.Factory(MoviesRepository, session=session)
+    users_repository = providers.Factory(UsersRepository, session=session)
+
+    interactions_service = providers.Singleton(InteractionsService, repository=interactions_repository)
+    movies_service = providers.Singleton(MoviesService, repository=movies_repository)
+    users_service = providers.Singleton(UsersService, repository=users_repository)
