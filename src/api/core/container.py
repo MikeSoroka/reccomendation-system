@@ -17,6 +17,8 @@ class Container(containers.DeclarativeContainer):
                 "src.api.controllers.movies_controller",
                 "src.api.controllers.users_controller",
                 "src.api.controllers.recommendations_controller",
+                "src.exporter_service.movielens_export_helper",
+                "src.exporter_service.data_export",
             ])
 
     session = providers.Resource(get_db_session)
