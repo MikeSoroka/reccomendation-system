@@ -1,5 +1,6 @@
 from src.api.db.repositories.interactions_repository import InteractionsRepository
 from src.api.entities.interaction_table import InteractionTable
+from src.api.schemas.batch.add_batch_model import AddBatchModel
 from src.api.schemas.interactions.add_interaction_model import AddInteractionModel
 from src.api.schemas.interactions.read_interaction_model import ReadInteractionModel
 
@@ -13,3 +14,6 @@ class InteractionsService:
 
     async def add_interaction(self, request: AddInteractionModel) ->  None:
         return await self.repository.add_interaction(request)
+
+    async def add_interactions(self, request: AddBatchModel) ->  None:
+        return await self.repository.add_interactions(request)

@@ -17,9 +17,9 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 from sqlmodel import SQLModel
-from src.api.models.entities.user_model import UserModel
-from src.api.models.entities.movie_model import MovieModel
-from src.api.models.entities.interaction_model import InteractionModel
+from src.api.entities.user_table import UserTable
+from src.api.entities.movie_table import MovieTable
+from src.api.entities.interaction_table import InteractionTable
 
 target_metadata = SQLModel.metadata
 # other values from the config, defined by the needs of env.py,
