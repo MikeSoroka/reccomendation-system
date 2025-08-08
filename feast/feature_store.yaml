@@ -1,0 +1,9 @@
+project: my_project
+registry: data/registry.db
+online_store:
+  type: redis
+  redis_type: redis
+  connection_string: redis:6379
+
+offline_store:
+  type: file
