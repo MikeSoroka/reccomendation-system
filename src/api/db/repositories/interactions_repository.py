@@ -1,4 +1,6 @@
-from typing import Iterable
+from typing import Iterable, Sequence
+
+from sqlmodel import select
 
 from src.api.db.data_utils import DataUtils
 from src.api.db.session import AsyncSession
@@ -16,6 +18,10 @@ class InteractionsRepository:
 
     async def get_interaction(self, request: ReadInteractionModel) -> InteractionTable | None:
         return await self.session.get(InteractionTable, request.id)
+
+    async def get_page(self) -> Sequence[InteractionTable] | None:
+        result = await self.session.exec(select(InteractionTable))
+        return result.all()
 
     async def add_interaction(self, request: AddInteractionModel) ->  None:
         interaction = InteractionTable(

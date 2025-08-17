@@ -1,3 +1,5 @@
+from typing import Sequence
+
 from src.api.db.repositories.interactions_repository import InteractionsRepository
 from src.api.entities.interaction_table import InteractionTable
 from src.api.schemas.batch.add_batch_model import AddBatchModel
@@ -11,6 +13,9 @@ class InteractionsService:
 
     async def get_interaction(self, request: ReadInteractionModel) -> InteractionTable | None:
         return await self.repository.get_interaction(request)
+
+    async def get_page(self) -> Sequence[InteractionTable] | None:
+        return await self.repository.get_page()
 
     async def add_interaction(self, request: AddInteractionModel) ->  None:
         return await self.repository.add_interaction(request)
