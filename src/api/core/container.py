@@ -4,6 +4,7 @@ from src.api.db.repositories.interactions_repository import InteractionsReposito
 from src.api.db.repositories.movies_repository import MoviesRepository
 from src.api.db.repositories.users_repository import UsersRepository
 from src.api.db.session import get_db_session
+from src.api.redis.redis_db import RedisDB
 from src.api.redis.session import get_redis_session
 from src.api.services.interactions_service import InteractionsService
 from src.api.services.movies_service import MoviesService
@@ -23,7 +24,14 @@ class Container(containers.DeclarativeContainer):
             ])
 
     db_session = providers.Resource(get_db_session)
-    redos_session = providers.Resource(get_redis_session)
+    user_mappings_redis_session = providers.Resource(
+        get_redis_session,
+        db=RedisDB.USERS_EMBEDDING_IDS
+    )
+    movie_mappings_redis_session = providers.Resource(
+        get_redis_session,
+        db=RedisDB.MOVIES_EMBEDDINGS_IDS
+    )
 
     interactions_repository = providers.Factory(InteractionsRepository, session=db_session)
     movies_repository = providers.Factory(MoviesRepository, session=db_session)
