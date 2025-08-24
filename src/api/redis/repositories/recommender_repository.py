@@ -32,8 +32,8 @@ class MoviesDataset(Dataset):
             redis_interactions_mappings=Provide[Container.interactions_mappings_redis_sync_session]
     ):
         user_id_str, movie_id_str, interaction_str = RedisUtils.parse_record(redis_interactions_mappings.get(str(index)), ConversionType.MIXED_TUPLE)
-        user_id = eval(user_id_str)
-        movie_id = eval(movie_id_str)
+        user_id = user_id_str[6:-2]
+        movie_id = movie_id_str[7:-2]
 
         interaction = np.float32(interaction_str)
         user_mapping = int(redis_users_mappings.get(str(user_id)))
