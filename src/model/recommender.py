@@ -8,6 +8,7 @@ class Recommender(Module):
         self.users_embedding = Embedding(n_users, n_emb)
         self.movies_embedding = Embedding(n_movies, n_emb)
 
-    def forward(self, users, movies):
+    def forward(self, data):
+        users, movies = data
         raw_scores = (self.users_embedding(users) * self.movies_embedding(movies)).sum(1)
-        return 0.5 + 4.5 * torch.sigmoid(raw_scores)
+        return 1 + 9 * torch.sigmoid(raw_scores)

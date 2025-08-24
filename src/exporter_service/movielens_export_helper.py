@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-from os import times
 
 from dependency_injector.wiring import inject, Provide
 
@@ -8,7 +7,6 @@ import os
 import pandas as pd
 
 from src.api.core.container import Container
-from src.api.redis.redis_db import RedisDB
 from src.api.schemas.batch.add_batch_model import AddBatchModel
 from src.api.schemas.interactions.add_interaction_model import AddInteractionModel
 from src.api.schemas.users.add_user_model import AddUserModel
@@ -30,8 +28,10 @@ class MovielensHelper:
         interactions_service: InteractionsService = Provide[Container.interactions_service],
         movies_service: MoviesService = Provide[Container.movies_service],
         users_service: UsersService = Provide[Container.users_service],
-        user_mappings_redis_session = Provide[Container.user_mappings_redis_session],
-        movie_mappings_redis_session = Provide[Container.movie_mappings_redis_session],
+        users_mappings_redis_session = Provide[Container.users_mappings_redis_session],
+        movies_mappings_redis_session = Provide[Container.movies_mappings_redis_session],
+        interactions_mappings_redis_session = Provide[Container.interactions_mappings_redis_session],
+
     ):
         print("Reading movielens dataset...")
         ratings_df = pd.read_csv(os.path.join(location, "rating.csv"))
@@ -86,6 +86,20 @@ class MovielensHelper:
         if EXPORT_EMBEDDING_IDS:
             print("WRITING TO REDIS...")
             for index, value in enumerate(user_id_to_uuid.values()):
-                await user_mappings_redis_session.set(str(value), str(index))
+                await users_mappings_redis_session.set(str(value), str(index))
             for index, value in enumerate(movie_id_to_uuid.values()):
-                await movie_mappings_redis_session.set(str(value), str(index))
+                await movies_mappings_redis_session.set(str(value), str(index))
+
+            redis_interactions_dict = {}
+            for index, interaction in enumerate(interaction_key_to_title.keys()):
+                user_mapping, movie_mapping = interaction
+                user_id = user_id_to_uuid[user_mapping]
+                movie_id = movie_id_to_uuid[movie_mapping]
+                interaction_score = interaction_key_to_title[interaction][0] * 2
+                redis_interactions_dict[str(index)] = str((user_id, movie_id, interaction_score))
+
+            BATCH_SIZE=10000
+            items = list(redis_interactions_dict.items())
+            for i in range(0, len(items), BATCH_SIZE):
+                batch_dict = dict(items[i:i + BATCH_SIZE])
+                await interactions_mappings_redis_session.mset(batch_dict)
