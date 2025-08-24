@@ -16,7 +16,7 @@ def create_sync_pool(db: RedisDB) -> ConnectionPool:
         db=db.value,
         socket_connect_timeout=30,
         socket_timeout=30,
-        max_connections=10,
+        max_connections=20,
     )
 
     return pool
